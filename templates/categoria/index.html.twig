@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categoria index{% endblock %}
+
+{% block body %}
+    <h1>Categoria index</h1>
+
+     {% for categoria in categorias %}
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{categoria.nombre}}</h5>
+                   
+                    <a href="{{ path('categoria_show', {'id': categoria.id}) }}">show</a>
+                    <a href="{{ path('categoria_edit', {'id': categoria.id}) }}">edit</a>
+                </div>
+            </div>
+                    
+        {% else %}
+            <h2>No hay productos</h2>
+        {% endfor %}
+
+    <a href="{{ path('categoria_new') }}">Create new</a>
+{% endblock %}

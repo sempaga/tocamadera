@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carrito{% endblock %}
+
+{% block body %}
+    <h1>Mi Carrito</h1>
+
+    {{ include('pedido/_form.html.twig') }}
+
+    <a href="{{ path('pedido_index') }}">back to list</a>
+{% endblock %}
