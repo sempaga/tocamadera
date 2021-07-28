@@ -29,6 +29,13 @@ class Categoria
      */
     private $productos;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $imagen;
+
+    
+
     public function __construct()
     {
         $this->productos = new ArrayCollection();
@@ -80,4 +87,23 @@ class Categoria
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->nombre;
+    }
+
+    public function getImagen(): ?string
+    {
+        return $this->imagen;
+    }
+
+    public function setImagen(string $imagen): self
+    {
+        $this->imagen = $imagen;
+
+        return $this;
+    }
+
+  
 }

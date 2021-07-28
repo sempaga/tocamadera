@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Pedido;
-use App\Form\Pedido1Type;
+use App\Form\PedidoType;
 use App\Repository\PedidoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class PedidoController extends AbstractController
     public function new(Request $request): Response
     {
         $pedido = new Pedido();
-        $form = $this->createForm(Pedido1Type::class, $pedido);
+        $form = $this->createForm(PedidoType::class, $pedido);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

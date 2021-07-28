@@ -20,13 +20,13 @@ class ProductosController extends AbstractController
             'productos' => $productosRepository->findAll(),
         ]);
     }
-    #[Route('/{categoria}', name: 'productos_categoria', methods: ['GET'])]
+    /* #[Route('/{categoria}', name: 'productos_categoria', methods: ['GET'])]
     public function categoria($categoria,ProductosRepository $productosRepository): Response
     {
         return $this->render('productos/index.html.twig', [
             'productos' => $productosRepository->findBy($categoria),
         ]);
-    }
+    } */
 
     #[Route('/new', name: 'productos_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
@@ -34,8 +34,14 @@ class ProductosController extends AbstractController
         $producto = new Productos();
         $form = $this->createForm(ProductosType::class, $producto);
         $form->handleRequest($request);
+        // $rutaProyecto = $this->get('kernel')->getProjectDir();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['imagen']->getData();
+            $extension = $file->guessExtension();
+            $fileName= 'foto_'.uniqid().'.'.$extension;
+            $file->move('C:\Users\marip\tocamadera\public\images',$fileName);
+            $producto->setImagen($fileName);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($producto);
             $entityManager->flush();

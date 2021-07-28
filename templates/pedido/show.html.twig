@@ -12,12 +12,20 @@
                 <td>{{ pedido.id }}</td>
             </tr>
             <tr>
+                <th>Productos</th>
+                <td>{% for producto in pedido.productos %} 
+                    <div>Nombre: {{ producto.nombre }} </div>
+                    <div>precio: {{ producto.precio}} </div>
+                
+                {% endfor %}</td>
+            </tr>
+            <tr>
                 <th>Cantidad</th>
                 <td>{{ pedido.cantidad }}</td>
             </tr>
             <tr>
                 <th>FechaSolicitud</th>
-                <td>{{ pedido.fechaSolicitud ? pedido.fechaSolicitud|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ pedido.fechaSolicitud ? pedido.fechaSolicitud|date('Y-m-d') : '' }}</td>
             </tr>
         </tbody>
     </table>

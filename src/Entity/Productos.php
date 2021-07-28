@@ -62,6 +62,13 @@ class Productos
      */
     private $pedidos;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $imagen;
+
+    
+
     public function __construct()
     {
         $this->proveedors = new ArrayCollection();
@@ -200,4 +207,23 @@ class Productos
 
         return $this;
     }
+
+    public function getImagen(): ?string
+    {
+        return $this->imagen;
+    }
+
+    public function setImagen(string $imagen): self
+    {
+        $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->nombre;
+    }
+
+
 }

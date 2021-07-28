@@ -38,4 +38,9 @@ class Factura
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->Pedido;
+    }
+
 }

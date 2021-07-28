@@ -9,12 +9,20 @@
     
         {% for producto in productos %}
             <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
+                <img src="{{ asset("images/" ~ producto.imagen) }}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <h5 class="card-title">{{producto.nombre}}</h5>
+                    <p class="card-text">{{producto.categoria}}.</p>
+                    <p class="card-text">{{producto.dimensiones}}.</p>
+                    <p class="card-text">{{producto.precio}}.</p>
                     <a href="{{ path('productos_show', {'id': producto.id}) }}">show</a>
+
+                    {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('productos_edit', {'id': producto.id}) }}">edit</a>
+                    <a href="{{ path('productos_delete', {'id': producto.id}) }}">delete</a>
+                    {% endif %}
+                    
+                   
                 </div>
             </div>
                     
@@ -22,6 +30,7 @@
             <h2>No hay productos</h2>
         {% endfor %}
         
-
+    {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ path('productos_new') }}">Create new</a>
+    {% endif %}
 {% endblock %}

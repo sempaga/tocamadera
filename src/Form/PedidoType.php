@@ -15,7 +15,7 @@ class PedidoType extends AbstractType
             ->add('cantidad')
             ->add('fechaSolicitud')
             ->add('productos')
-            ->add('cliente')
+           // ->add('cliente')
         ;
     }
 
