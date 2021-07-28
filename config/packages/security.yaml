@@ -41,10 +41,13 @@ security:
         - { path: ^/profile, roles: ROLE_CLIENTE }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/productos, roles: [ROLE_CLIENTE, ROLE_ADMIN] }
+        - { path: ^/productos/edit, roles: ROLE_ADMIN}
+        - { path: ^/productos/new, roles:  ROLE_ADMIN}
+        - { path: ^/productos/delete, roles: ROLE_ADMIN }
+        
         - { path: ^/carrito, roles: ROLE_CLIENTE }
-        - { path: ^/categoria, roles: ROLE_CLIENTE }
-        - { path: ^/categoria, roles: ROLE_CLIENTE }
-        - { path: ^/categoria, roles: ROLE_CLIENTE }
-        - { path: ^/categoria, roles: ROLE_CLIENTE }
-        - { path: ^/categoria, roles: ROLE_CLIENTE }
+        - { path: ^/categoria, roles: [ROLE_CLIENTE, ROLE_ADMIN] }
+        - { path: ^/categoria/edit, roles: ROLE_ADMIN}
+        - { path: ^/categoria/new, roles:  ROLE_ADMIN}
+        - { path: ^/categoria/delete, roles: ROLE_ADMIN }
         

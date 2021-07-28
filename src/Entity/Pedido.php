@@ -45,6 +45,11 @@ class Pedido
      */
     private $cliente;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Entrega::class, mappedBy="pedido", cascade={"persist", "remove"})
+     */
+    private $entrega;
+
     public function __construct()
     {
         $this->productos = new ArrayCollection();
@@ -154,6 +159,28 @@ class Pedido
     public function __toString()
     {
         return $this->cliente;
+    }
+
+    public function getEntrega(): ?Entrega
+    {
+        return $this->entrega;
+    }
+
+    public function setEntrega(?Entrega $entrega): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($entrega === null && $this->entrega !== null) {
+            $this->entrega->setPedido(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($entrega !== null && $entrega->getPedido() !== $this) {
+            $entrega->setPedido($this);
+        }
+
+        $this->entrega = $entrega;
+
+        return $this;
     }
 
 }
