@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Subcategoria index{% endblock %}
+
+{% block body %}
+    <h1>Subcategoria index</h1>
+        {% for subcategoria in subcategorias %}
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ asset("images/" ~ subcategoria.imagen) }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{subcategoria.nombre}}</h5>
+                            
+                            
+
+                        
+                            <a href="{{ path('productos_subcategoria', {'subcategoria': subcategoria.id}) }} }}">show</a>
+                            
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('subcategoria_edit', {'id': subcategoria.id}) }}">edit</a>
+                            <a href="{{ path('subcategoria_delete', {'id': subcategoria.id}) }}">delete</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                            
+                {% else %}
+                    <h2>No hay productos</h2>
+                {% endfor %}
+            {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('subcategoria_new', {'categoria': categoria.id}) }}">Create new</a>
+            {% endif %}
+   
+{% endblock %}

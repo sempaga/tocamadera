@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Categoria;
 use App\Entity\Productos;
+use App\Entity\Subcategoria;
 use App\Form\ProductosType;
 use App\Repository\ProductosRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,18 +20,20 @@ class ProductosController extends AbstractController
     {
         return $this->render('productos/index.html.twig', [
             'productos' => $productosRepository->findAll(),
+            
         ]);
     }
-    /* #[Route('/{categoria}', name: 'productos_categoria', methods: ['GET'])]
-    public function categoria($categoria,ProductosRepository $productosRepository): Response
+     #[Route('/{subcategoria}', name: 'productos_subcategoria', methods: ['GET'])]
+    public function categoria(Subcategoria $subcategoria,ProductosRepository $productosRepository): Response
     {
         return $this->render('productos/index.html.twig', [
-            'productos' => $productosRepository->findBy($categoria),
+            'productos' => $productosRepository->findBySubcategoria($subcategoria),
+            'subcategoria'=>$subcategoria
         ]);
-    } */
+    } 
 
-    #[Route('/new', name: 'productos_new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    #[Route('/{subcategoria}/new', name: 'productos_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, Subcategoria $subcategoria): Response
     {
         $producto = new Productos();
         $form = $this->createForm(ProductosType::class, $producto);
@@ -39,18 +43,19 @@ class ProductosController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form['imagen']->getData();
             $extension = $file->guessExtension();
-            $fileName= 'foto_'.uniqid().'.'.$extension;
+            $fileName= 'foto_producto_'.uniqid().'.'.$extension;
             $file->move('C:\Users\marip\tocamadera\public\images',$fileName);
             $producto->setImagen($fileName);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($producto);
             $entityManager->flush();
 
-            return $this->redirectToRoute('productos_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('productos_index', ['subcategoria'=>$subcategoria->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('productos/new.html.twig', [
             'producto' => $producto,
+            'subcategoria'=>$subcategoria,
             'form' => $form,
         ]);
     }

@@ -31,8 +31,9 @@
     </table>
 
     <a href="{{ path('pedido_index') }}">back to list</a>
-
     <a href="{{ path('pedido_edit', {'id': pedido.id}) }}">edit</a>
 
+    {% if is_granted('ROLE_ADMIN') %}
     {{ include('pedido/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

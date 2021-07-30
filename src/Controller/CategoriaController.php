@@ -29,6 +29,11 @@ class CategoriaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['imagen']->getData();
+            $extension = $file->guessExtension();
+            $fileName= 'foto_categoria_'.uniqid().'.'.$extension;
+            $file->move('C:\Users\marip\tocamadera\public\images',$fileName);
+            $categorium->setImagen($fileName);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($categorium);
             $entityManager->flush();

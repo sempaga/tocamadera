@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Subcategoria{% endblock %}
+
+{% block body %}
+    <h1>Subcategoria</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ subcategorium.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ subcategorium.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Imagen</th>
+                <td>{{ subcategorium.imagen }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('subcategoria_index',  {'categoria': subcategorium.categoria.id}) }}">back to list</a>
+
+    <a href="{{ path('subcategoria_edit', {'id': subcategorium.id}) }}">edit</a>
+
+    {{ include('subcategoria/_delete_form.html.twig') }}
+{% endblock %}

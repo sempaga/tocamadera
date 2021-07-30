@@ -2,27 +2,28 @@
 
 namespace App\Form;
 
-use App\Entity\Categoria;
+use App\Entity\Proveedor;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoriaType extends AbstractType
+class ProveedorType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('nombre')
-            ->add('imagen', FileType::class)
-           
+            ->add('telefono')
+            ->add('email')
+            ->add('ciudad')
+            ->add('producto')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Categoria::class,
+            'data_class' => Proveedor::class,
         ]);
     }
 }

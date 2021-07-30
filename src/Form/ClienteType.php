@@ -2,27 +2,31 @@
 
 namespace App\Form;
 
-use App\Entity\Categoria;
+use App\Entity\Cliente;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoriaType extends AbstractType
+class ClienteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('nombre')
-            ->add('imagen', FileType::class)
-           
+            ->add('apellido')
+            ->add('telefono')
+            ->add('ciudad')
+            ->add('calle')
+            ->add('cp')
+            ->add('npiso')
+            ->add('email')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Categoria::class,
+            'data_class' => Cliente::class,
         ]);
     }
 }

@@ -7,5 +7,5 @@
     
     {{ include('productos/_form.html.twig') }}
 
-    <a href="{{ path('productos_index') }}">back to list</a>
+    <a href="{{ path('productos_index', {'subcategoria': subcategoria.id}) }}">back to list</a>
 {% endblock %}

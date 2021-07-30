@@ -22,7 +22,7 @@ class ProductosType extends AbstractType
             ->add('color')
             ->add('precio', MoneyType::class)
             ->add('proveedors')
-            ->add('categoria') 
+            ->add('subcategoria') 
             
         ;
     }

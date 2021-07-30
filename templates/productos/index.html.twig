@@ -12,7 +12,7 @@
                 <img src="{{ asset("images/" ~ producto.imagen) }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">{{producto.nombre}}</h5>
-                    <p class="card-text">{{producto.categoria}}.</p>
+                    <p class="card-text">{{producto.subcategoria}}.</p>
                     <p class="card-text">{{producto.dimensiones}}.</p>
                     <p class="card-text">{{producto.precio}}.</p>
                     <a href="{{ path('productos_show', {'id': producto.id}) }}">show</a>
@@ -31,6 +31,6 @@
         {% endfor %}
         
     {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('productos_new') }}">Create new</a>
+    <a href="{{ path('productos_new', {'subcategoria': subcategoria.id}) }}">Create new</a>
     {% endif %}
 {% endblock %}

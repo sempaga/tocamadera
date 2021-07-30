@@ -51,11 +51,7 @@ class Productos
 
     
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Categoria::class, inversedBy="productos")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $categoria;
+    
 
     /**
      * @ORM\ManyToMany(targetEntity=Pedido::class, mappedBy="productos")
@@ -66,6 +62,11 @@ class Productos
      * @ORM\Column(type="string", length=255)
      */
     private $imagen;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Subcategoria::class, inversedBy="productos")
+     */
+    private $subcategoria;
 
     
 
@@ -169,17 +170,7 @@ class Productos
 
    
 
-    public function getCategoria(): ?Categoria
-    {
-        return $this->categoria;
-    }
-
-    public function setCategoria(?Categoria $categoria): self
-    {
-        $this->categoria = $categoria;
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection|Pedido[]
@@ -223,6 +214,18 @@ class Productos
     public function __toString()
     {
         return $this->nombre;
+    }
+
+    public function getSubcategoria(): ?Subcategoria
+    {
+        return $this->subcategoria;
+    }
+
+    public function setSubcategoria(?Subcategoria $subcategoria): self
+    {
+        $this->subcategoria = $subcategoria;
+
+        return $this;
     }
 
 
