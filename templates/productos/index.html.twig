@@ -19,7 +19,7 @@
 
                     {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('productos_edit', {'id': producto.id}) }}">edit</a>
-                    <a href="{{ path('productos_delete', {'id': producto.id}) }}">delete</a>
+                    {{ include('productos/_delete_form.html.twig') }}
                     {% endif %}
                     
                    
@@ -30,7 +30,7 @@
             <h2>No hay productos</h2>
         {% endfor %}
         
-    {% if is_granted('ROLE_ADMIN') %}
+    {% if is_granted('ROLE_ADMIN') and subcategoria is defined %} 
     <a href="{{ path('productos_new', {'subcategoria': subcategoria.id}) }}">Create new</a>
     {% endif %}
 {% endblock %}

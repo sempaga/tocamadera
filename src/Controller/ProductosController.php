@@ -23,7 +23,7 @@ class ProductosController extends AbstractController
             
         ]);
     }
-     #[Route('/{subcategoria}', name: 'productos_subcategoria', methods: ['GET'])]
+     #[Route('/{subcategoria}', name: 'productos_subcategoria', methods: ['GET'], requirements:['subcategoria'=>'\d+'])]
     public function categoria(Subcategoria $subcategoria,ProductosRepository $productosRepository): Response
     {
         return $this->render('productos/index.html.twig', [
@@ -46,11 +46,20 @@ class ProductosController extends AbstractController
             $fileName= 'foto_producto_'.uniqid().'.'.$extension;
             $file->move('C:\Users\marip\tocamadera\public\images',$fileName);
             $producto->setImagen($fileName);
+            dump($producto);
+            $proveedores= $producto->getProveedors();
+            dump($proveedores);
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($producto);
+            foreach ($proveedores as $proveedor){
+                $proveedor->addProducto($producto);
+                $entityManager->persist($proveedor);
+            }
+
+           $entityManager->persist($producto);
+            
             $entityManager->flush();
 
-            return $this->redirectToRoute('productos_index', ['subcategoria'=>$subcategoria->getId()], Response::HTTP_SEE_OTHER);
+           return $this->redirectToRoute('productos_subcategoria', ['subcategoria'=>$subcategoria->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('productos/new.html.twig', [
@@ -59,6 +68,8 @@ class ProductosController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    //TODO: HACER NUEVO NEW CON REDIRECT A INDEX
 
     #[Route('/{id}', name: 'productos_show', methods: ['GET'])]
     public function show(Productos $producto): Response
@@ -86,7 +97,7 @@ class ProductosController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'productos_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'productos_delete', methods: ['POST'])]
     public function delete(Request $request, Productos $producto): Response
     {
         if ($this->isCsrfTokenValid('delete'.$producto->getId(), $request->request->get('_token'))) {
@@ -95,6 +106,6 @@ class ProductosController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('productos_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('productos_subcategoria', ['subcategoria'=>$producto->getSubcategoria()->getId()], Response::HTTP_SEE_OTHER);
     }
 }

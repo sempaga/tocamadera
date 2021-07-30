@@ -5,7 +5,9 @@
 {% block body %}
     <h1>Categoria index</h1>
 
+    <div class="row row-cols-1 row-cols-md-3 g-4">
      {% for categoria in categorias %}
+        <div class="col">
             <div class="card" style="width: 18rem;">
                 <img src="{{ asset("images/" ~ categoria.imagen) }}" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -22,10 +24,12 @@
                     {% endif %}
                 </div>
             </div>
+        </div>
                     
         {% else %}
             <h2>No hay productos</h2>
         {% endfor %}
+    </div>
      {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ path('categoria_new') }}">Create new</a>
     {% endif %}

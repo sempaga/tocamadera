@@ -27,6 +27,12 @@
                 <th>Ciudad</th>
                 <td>{{ proveedor.ciudad }}</td>
             </tr>
+            <tr>
+                <th>Productos</th>
+                <td>{% for producto in proveedor.producto %}
+                    <p>{{producto.nombre}}</p>
+                {% endfor %}</td>
+            </tr>
         </tbody>
     </table>
 

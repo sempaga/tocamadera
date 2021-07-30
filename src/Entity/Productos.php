@@ -49,10 +49,6 @@ class Productos
      */
     private $proveedors;
 
-    
-
-    
-
     /**
      * @ORM\ManyToMany(targetEntity=Pedido::class, mappedBy="productos")
      */

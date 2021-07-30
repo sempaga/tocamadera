@@ -13,11 +13,11 @@
                             
 
                         
-                            <a href="{{ path('productos_subcategoria', {'subcategoria': subcategoria.id}) }} }}">show</a>
+                            <a href="{{ path('productos_subcategoria', {'subcategoria': subcategoria.id})}}">show</a>
                             
                             {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ path('subcategoria_edit', {'id': subcategoria.id}) }}">edit</a>
-                            <a href="{{ path('subcategoria_delete', {'id': subcategoria.id}) }}">delete</a>
+                            {{ include('subcategoria/_delete_form.html.twig') }}                            
                             {% endif %}
                         </div>
                     </div>
