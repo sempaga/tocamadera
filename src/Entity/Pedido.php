@@ -156,9 +156,19 @@ class Pedido
         return $this;
     }
 
+    public function getPrecioTotal() {
+        $precioTotal = 0;
+        $productos = $this->getProductos();
+        foreach($productos as $producto) {
+            $precioTotal += $producto->getPrecio();
+        } 
+        return $precioTotal;
+    }
+   
     public function __toString()
     {
-        return $this->cliente;
+        $producto = $this->getProductos();
+        return $this->id . " ( cliente: " . $this->cliente . ", precio: ". $this->getPrecioTotal().  " € )";
     }
 
     public function getEntrega(): ?Entrega

@@ -48,7 +48,7 @@ class PedidoController extends AbstractController
     #[Route('/{id}', name: 'pedido_show', methods: ['GET'])]
     public function show(Pedido $pedido): Response
     {
-        $this->denyAccessUnlessGranted('show', $pedido, 'No tienes permiso para entrar aqui');
+        //$this->denyAccessUnlessGranted('show', $pedido, 'No tienes permiso para entrar aqui');
         return $this->render('pedido/show.html.twig', [
             'pedido' => $pedido,
         ]);

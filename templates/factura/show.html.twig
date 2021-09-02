@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Factura{% endblock %}
+
+{% block body %}
+    <h1>Factura</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ factura.id }}</td>
+            </tr>
+            <tr>
+                <th>Productos:</th>
+                <td>{% for producto in factura.pedido.productos %}
+                    <p>{{producto}} </p> 
+                {% endfor %} </td>
+            </tr>
+            <tr>
+                <th>Cliente</th>
+                <td>{{ factura.pedido.cliente }} {{factura.pedido.cliente.apellido}}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ factura.pedido.cliente.telefono }}</td>
+            </tr>
+            <tr>
+                <th>Ciudad</th>
+                <td>{{ factura.pedido.cliente.ciudad }}</td>
+            </tr>
+            <tr>
+                <th>Calle</th>
+                <td>{{ factura.pedido.cliente.calle }}</td>
+            </tr>
+            <tr>
+                <th>Cp</th>
+                <td>{{ factura.pedido.cliente.cp }}</td>
+            </tr>
+            <tr>
+                <th>Precio Total</th>
+                <td>{{ factura.pedido.preciototal }} €</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ factura.pedido.cliente.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('factura_index') }}">back to list</a>
+
+    <a href="{{ path('factura_edit', {'id': factura.id}) }}">edit</a>
+
+    {{ include('factura/_delete_form.html.twig') }}
+{% endblock %}
