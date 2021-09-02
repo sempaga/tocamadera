@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -41,6 +43,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Cliente::class, mappedBy="usuario", cascade={"persist", "remove"})
+     */
+    private $cliente;
+
+  
+
+    public function __construct()
+    {
+       
+    }
 
     public function getId(): ?int
     {
@@ -153,4 +167,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getCliente(): ?Cliente
+    {
+        return $this->cliente;
+    }
+
+    public function setCliente(?Cliente $cliente): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($cliente === null && $this->cliente !== null) {
+            $this->cliente->setUsuario(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($cliente !== null && $cliente->getUsuario() !== $this) {
+            $cliente->setUsuario($this);
+        }
+
+        $this->cliente = $cliente;
+
+        return $this;
+    }
+
+   
 }

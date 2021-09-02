@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Cliente;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
@@ -31,7 +32,7 @@ class RegistrationController extends AbstractController
         $user->setRol('ROLE_CLIENTE');
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-
+ 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
@@ -42,7 +43,27 @@ class RegistrationController extends AbstractController
             );
             $user->setRol('ROLE_CLIENTE');
             $entityManager = $this->getDoctrine()->getManager();
+            $cliente = new Cliente;
+            //añadir campos cliente desde html
+            // 1) recibir datos del formulario
+            $nombre = $request->request->get('nombre');
+            $apellido = $request->request->get('apellido');
+            $telefono = $request->request->get('telefono');
+            $ciudad = $request->request->get('ciudad');
+            $calle = $request->request->get('calle');
+            $cp = $request->request->get('cp');
+            $npiso = $request->request->get('npiso');
+            $cliente->setNombre($nombre);
+            $cliente->setApellido($apellido);
+            $cliente->setTelefono($telefono);
+            $cliente->setCiudad($ciudad);
+            $cliente->setCalle($calle);
+            $cliente->setCp($cp);
+            $cliente->setNpiso($npiso);
+            $cliente->setEmail($user->getEmail());
+            $user->setCliente($cliente);
             $entityManager->persist($user);
+            $entityManager->persist($cliente);
             $entityManager->flush();
 
             // generate a signed url and email it to the user

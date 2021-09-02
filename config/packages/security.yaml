@@ -39,7 +39,8 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_CLIENTE }
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_ANONYMOUS}
+        - { path: ^/register, roles: IS_ANONYMOUS}
         - { path: ^/productos/edit, roles: ROLE_ADMIN}
         - { path: ^/productos/new, roles:  ROLE_ADMIN}
         - { path: ^/productos/delete, roles: ROLE_ADMIN }
@@ -47,7 +48,7 @@ security:
         - { path: ^/pedido/new, roles: ROLE_CLIENTE }
         - { path: ^/pedido/edit, roles: [ROLE_CLIENTE, ROLE_ADMIN] }
         - { path: ^/pedido/delete, roles: ROLE_ADMIN }
-        - { path: ^/pedido, roles: ROLE_CLIENTE }
+        - { path: ^/pedido, roles: [ROLE_CLIENTE, ROLE_ADMIN] }
         - { path: ^/categoria/edit, roles: ROLE_ADMIN}
         - { path: ^/categoria/new, roles:  ROLE_ADMIN}
         - { path: ^/categoria/delete, roles: ROLE_ADMIN }

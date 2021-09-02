@@ -8,14 +8,44 @@
     {% endfor %}
 
     <h1>Register</h1>
-
+     <form method="POST">
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
+        <div class='mb-3'> 
+            <label class="from-label required">Nombre: </label>
+            <input type="text" name="nombre" required="requiered" class="from-control">
+        </div>
+        
+        <div class='mb-3'> 
+            <label class="from-label required">Apellido: </label>
+            <input type="text" name="apellido" required="requiered" class="from-control">
+        </div>
+        <div class='mb-3'> 
+            <label class="from-label required">Telefono: </label>
+            <input type="text" name="telefono" required="requiered" class="from-control">
+        </div>
+        <div class='mb-3'> 
+            <label class="from-label required">Ciudad: </label>
+            <input type="text" name="ciudad" required="requiered" class="from-control">
+        </div>
+        <div class='mb-3'> 
+            <label class="from-label required">Calle: </label>
+            <input type="text" name="calle" required="requiered" class="from-control">
+        </div>
+        <div class='mb-3'> 
+            <label class="from-label required">CP(codigo postal): </label>
+            <input type="text" name="cp" required="requiered" class="from-control">
+        </div>
+        <div class='mb-3'> 
+            <label class="from-label required">Numero piso: </label>
+            <input type="text" name="npiso"  class="from-control">
+        </div>
         {{ form_row(registrationForm.agreeTerms) }}
 
         <button type="submit" class="btn">Register</button>
     {{ form_end(registrationForm) }}
+    </from>
 {% endblock %}

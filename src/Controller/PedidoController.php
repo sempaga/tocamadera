@@ -9,13 +9,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/pedido')]
 class PedidoController extends AbstractController
 {
     #[Route('/', name: 'pedido_index', methods: ['GET'])]
-    public function index(PedidoRepository $pedidoRepository): Response
+    public function index(PedidoRepository $pedidoRepository, Security $security): Response
     {
+       
         return $this->render('pedido/index.html.twig', [
             'pedidos' => $pedidoRepository->findAll(),
         ]);
@@ -30,6 +32,7 @@ class PedidoController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $pedido->setCliente($this->getUser()->getCliente());
             $entityManager->persist($pedido);
             $entityManager->flush();
 
@@ -45,6 +48,7 @@ class PedidoController extends AbstractController
     #[Route('/{id}', name: 'pedido_show', methods: ['GET'])]
     public function show(Pedido $pedido): Response
     {
+        $this->denyAccessUnlessGranted('show', $pedido, 'No tienes permiso para entrar aqui');
         return $this->render('pedido/show.html.twig', [
             'pedido' => $pedido,
         ]);

@@ -71,12 +71,21 @@ class Cliente
      */
     private $pedidos;
 
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="cliente", cascade={"persist", "remove"})
+     */
+    private $usuario;
+
+
+
+
    
 
     public function __construct()
     {
         $this->pedidos = new ArrayCollection();
         $this->modoPago = new ArrayCollection();
+       
     }
 
     public function getId(): ?int
@@ -247,6 +256,18 @@ class Cliente
         return $this->nombre;
     }
 
+    public function getUsuario(): ?User
+    {
+        return $this->usuario;
+    }
 
+    public function setUsuario(?User $usuario): self
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+   
     
 }

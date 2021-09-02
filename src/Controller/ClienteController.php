@@ -17,7 +17,7 @@ class ClienteController extends AbstractController
     public function index(ClienteRepository $clienteRepository): Response
     {
         return $this->render('cliente/index.html.twig', [
-            'clientes' => $clienteRepository->findAll(),
+            'clientes' => $clienteRepository->findAll()
         ]);
     }
 
