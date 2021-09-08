@@ -17,10 +17,31 @@ class PedidoController extends AbstractController
     #[Route('/', name: 'pedido_index', methods: ['GET'])]
     public function index(PedidoRepository $pedidoRepository, Security $security): Response
     {
+
+        $todos_los_pedidos = $pedidoRepository->findAll();
+        $pedidos= array();
+
+        //ROLE_ADMIN puede ver todos los pedidos
+        if($security->isGranted('ROLE_ADMIN')){
+            $pedidos = $todos_los_pedidos;
+        }
+
+        //ROLE_CLIENTE puede ver solo sus pedidos 
+        if($security->isGranted('ROLE_VENDEDOR')){
+            $mispedidos = array();
+            foreach($todos_los_pedidos as $pedido) {
+                if($this->getUser() === $pedido->getCliente())
+                $mispedidos[] = $pedido;
+            }
+            $pedidos = $mispedidos;
+        } 
+
        
         return $this->render('pedido/index.html.twig', [
-            'pedidos' => $pedidoRepository->findAll(),
+            
+            'pedidos' => $pedidos
         ]);
+       
     }
 
     #[Route('/new', name: 'pedido_new', methods: ['GET', 'POST'])]
@@ -48,7 +69,7 @@ class PedidoController extends AbstractController
     #[Route('/{id}', name: 'pedido_show', methods: ['GET'])]
     public function show(Pedido $pedido): Response
     {
-        //$this->denyAccessUnlessGranted('show', $pedido, 'No tienes permiso para entrar aqui');
+        $this->denyAccessUnlessGranted('show', $pedido, 'No tienes permiso para entrar aqui');
         return $this->render('pedido/show.html.twig', [
             'pedido' => $pedido,
         ]);

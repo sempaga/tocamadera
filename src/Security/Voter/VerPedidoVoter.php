@@ -19,9 +19,12 @@ class VerPedidoVoter extends Voter
 
     protected function voteOnAttribute(string $attribute, $pedido, TokenInterface $token): bool
     {
+        /** @var \App\Entity\User */
         $user = $token->getUser();
-        // if the user is anonymous, do not grant access
-        if ($user->getId() == $pedido->getCliente()->getUsuarioId()) {
+        if("ROLE_ADMIN"===$user->getRol()){
+            return true;
+        }
+        if ($user->getId() == $pedido->getCliente()->getUsuario()->getId()) {
             return true;
         }
  
