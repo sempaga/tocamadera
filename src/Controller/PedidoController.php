@@ -6,6 +6,7 @@ use App\Entity\Pedido;
 use App\Form\PedidoType;
 use App\Repository\PedidoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,13 +28,17 @@ class PedidoController extends AbstractController
         }
 
         //ROLE_CLIENTE puede ver solo sus pedidos 
-        if($security->isGranted('ROLE_VENDEDOR')){
+        if($security->isGranted('ROLE_CLIENTE')){
             $mispedidos = array();
             foreach($todos_los_pedidos as $pedido) {
-                if($this->getUser() === $pedido->getCliente())
+                if($this->getUser() === $pedido->getCliente()->getUsuario())
+              
                 $mispedidos[] = $pedido;
+                dump($mispedidos);
+
             }
             $pedidos = $mispedidos;
+            
         } 
 
        
