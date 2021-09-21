@@ -1,9 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cliente index{% endblock %}
+{% block title %}
+{% if is_granted('ROLE_CLIENTE') %}
+MI PERFIL          
+{% elseif is_granted('ROLE_ADMIN') %}
+LISTADO CLIENTES                  
+{% endif %}
+{% endblock %}
 
 {% block body %}
-    <h1>Cliente index</h1>
+    {% if is_granted('ROLE_CLIENTE') %}
+<h1>MI PERFIL</h1>        
+{% elseif is_granted('ROLE_ADMIN') %}
+<h1>LISTADO CLIENTES</h1>                
+{% endif %}
 
     <table class="table">
         <thead>
@@ -17,7 +27,8 @@
                 <th>Cp</th>
                 <th>Npiso</th>
                 <th>Email</th>
-                <th>actions</th>
+                <th>Tarjetas</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -32,18 +43,28 @@
                 <td>{{ cliente.cp }}</td>
                 <td>{{ cliente.npiso }}</td>
                 <td>{{ cliente.email }}</td>
+                <td>{% for modoPago in cliente.modoPago %}
+                    {{modoPago}}
+                {% endfor %}
+                {% if is_granted ('ROLE_CLIENTE') %}
+                    <a href="{{ path('modo_pago_new')}}">Añadir tarjeta</a>
+                    <a href="{{ path('modo_pago_index')}}">Ver tarjetas</a>
+                    {% endif %}
+                </td>
                 <td>
-                    <a href="{{ path('cliente_show', {'id': cliente.id}) }}">show</a>
-                    <a href="{{ path('cliente_edit', {'id': cliente.id}) }}">edit</a>
+                    <a href="{{ path('cliente_show', {'id': cliente.id}) }}">Ver</a>
+                    <a href="{{ path('cliente_edit', {'id': cliente.id}) }}">Editar</a>
+                    
+                    
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="10">no records found</td>
+                <td colspan="10">Sin resultados</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('cliente_new') }}">Create new</a>
+    <a href="{{ path('cliente_new') }}">Crear nuevo</a>
 {% endblock %}

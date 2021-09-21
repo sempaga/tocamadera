@@ -37,14 +37,14 @@ security:
     # # Easy way to control access for large sections of your site
     # # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
+
         - { path: ^/profile, roles: ROLE_CLIENTE }
         - { path: ^/login, roles: IS_ANONYMOUS}
         - { path: ^/register, roles: IS_ANONYMOUS}
         - { path: ^/productos/edit, roles: ROLE_ADMIN}
         - { path: ^/productos/new, roles:  ROLE_ADMIN}
         - { path: ^/productos/delete, roles: ROLE_ADMIN }
-        - { path: ^/productos, roles: [ROLE_CLIENTE, ROLE_ADMIN] }
+        - { path: ^/productos, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/pedido/new, roles: ROLE_CLIENTE }
         - { path: ^/pedido/edit, roles: [ROLE_CLIENTE, ROLE_ADMIN] }
         - { path: ^/pedido/delete, roles: ROLE_ADMIN }
@@ -52,9 +52,6 @@ security:
         - { path: ^/categoria/edit, roles: ROLE_ADMIN}
         - { path: ^/categoria/new, roles:  ROLE_ADMIN}
         - { path: ^/categoria/delete, roles: ROLE_ADMIN }
-        - { path: ^/categoria, roles: [ROLE_CLIENTE, ROLE_ADMIN] }
-
-
-        
-        - { path: ^/, roles: [ROLE_CLIENTE, ROLE_ADMIN] }
+        - { path: ^/categoria, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         

@@ -9,15 +9,39 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/cliente')]
 class ClienteController extends AbstractController
 {
     #[Route('/', name: 'cliente_index', methods: ['GET'])]
-    public function index(ClienteRepository $clienteRepository): Response
+    public function index(ClienteRepository $clienteRepository, Security $security): Response
     {
+
+        $todos_los_clientes =  $clienteRepository->findAll();
+        $clientes= array();
+
+        //ROLE_ADMIN puede ver todos los pedidos
+        if($security->isGranted('ROLE_ADMIN')){
+            $clientes =  $todos_los_clientes;
+            dump($clientes);
+        }
+
+        //ROLE_CLIENTE puede ver solo sus pedidos 
+        if($security->isGranted('ROLE_CLIENTE')){
+            $miperfil = array();
+            foreach($todos_los_clientes as $cliente) {
+                if($this->getUser() === $cliente->getUsuario())
+              
+                $miperfil[] = $cliente;
+                dump($miperfil);
+
+            }
+            $clientes = $miperfil;
+            
+        } 
         return $this->render('cliente/index.html.twig', [
-            'clientes' => $clienteRepository->findAll()
+            'clientes' => $clientes
         ]);
     }
 

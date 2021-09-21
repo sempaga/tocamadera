@@ -69,9 +69,43 @@ class ProductosController extends AbstractController
         ]);
     }
 
-    //TODO: HACER NUEVO NEW CON REDIRECT A INDEX
+    #[Route('/new', name: 'productos_new_producto', methods: ['GET', 'POST'])]
+    public function newProducto(Request $request): Response
+    {
+        $producto = new Productos();
+        $form = $this->createForm(ProductosType::class, $producto);
+        $form->handleRequest($request);
+        // $rutaProyecto = $this->get('kernel')->getProjectDir();
 
-    #[Route('/{id}', name: 'productos_show', methods: ['GET'])]
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['imagen']->getData();
+            $extension = $file->guessExtension();
+            $fileName= 'foto_producto_'.uniqid().'.'.$extension;
+            $file->move('C:\Users\marip\tocamadera\public\images',$fileName);
+            $producto->setImagen($fileName);
+            dump($producto);
+            $proveedores= $producto->getProveedors();
+            dump($proveedores);
+            $entityManager = $this->getDoctrine()->getManager();
+            foreach ($proveedores as $proveedor){
+                $proveedor->addProducto($producto);
+                $entityManager->persist($proveedor);
+            }
+
+           $entityManager->persist($producto);
+            
+            $entityManager->flush();
+
+           return $this->redirectToRoute('productos', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('productos/new.html.twig', [
+            'producto' => $producto,
+            
+            'form' => $form,
+        ]);
+    }
+    #[Route('/ver/{id}', name: 'productos_show', methods: ['GET'])]
     public function show(Productos $producto): Response
     {
         return $this->render('productos/show.html.twig', [

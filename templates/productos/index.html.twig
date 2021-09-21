@@ -6,10 +6,11 @@
     <h1>Productos index</h1>
     
 
-    
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for producto in productos %}
-            <div class="card" style="width: 18rem;">
-                <img src="{{ asset("images/" ~ producto.imagen) }}" class="card-img-top" alt="...">
+        <div class="col">
+            <div class="card animated fadeIn fast">
+                <img class="card-img-top img-fluid" src="{{ asset("images/" ~ producto.imagen) }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">{{producto.nombre}}</h5>
                     <p class="card-text">{{producto.subcategoria}}.</p>
@@ -25,12 +26,17 @@
                    
                 </div>
             </div>
+        </div>
                     
         {% else %}
             <h2>No hay productos</h2>
         {% endfor %}
-        
+    </div>
+
     {% if is_granted('ROLE_ADMIN') and subcategoria is defined %} 
-    <a href="{{ path('productos_new', {'subcategoria': subcategoria.id}) }}">Create new</a>
+    <a href="{{ path('productos_new', {'subcategoria': subcategoria.id}) }}">Create new(por subcategoria)</a>
+    
+    {% elseif is_granted('ROLE_ADMIN') %} 
+    <a href= "{{path('productos_new_producto')}}">Create new</a>
     {% endif %}
 {% endblock %}

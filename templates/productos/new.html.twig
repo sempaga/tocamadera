@@ -6,6 +6,11 @@
     <h1>Create new Productos</h1>
     
     {{ include('productos/_form.html.twig') }}
-
+    {% if is_granted('ROLE_ADMIN') and subcategoria is defined %} 
     <a href="{{ path('productos_subcategoria', {'subcategoria': subcategoria.id}) }}">back to list</a>
+    
+    {% elseif is_granted('ROLE_ADMIN') %} 
+    <a href= "{{path('productos_index')}}">Create new</a>
+    {% endif %}
+    
 {% endblock %}

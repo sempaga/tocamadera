@@ -3,9 +3,10 @@
 {% block title %}Subcategoria index{% endblock %}
 
 {% block body %}
-    <h1>Subcategoria index</h1>
+    <h1>Subcategorias</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for subcategoria in subcategorias %}
-                    <div class="card" style="width: 18rem;">
+                    <div class="card animated fadeIn fast">
                         <img src="{{ asset("images/" ~ subcategoria.imagen) }}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{subcategoria.nombre}}</h5>
@@ -28,5 +29,6 @@
             {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('subcategoria_new', {'categoria': categoria.id}) }}">Create new</a>
             {% endif %}
+    </div>
    
 {% endblock %}

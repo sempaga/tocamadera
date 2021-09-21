@@ -8,8 +8,8 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
      {% for categoria in categorias %}
         <div class="col">
-            <div class="card" style="width: 18rem;">
-                <img src="{{ asset("images/" ~ categoria.imagen) }}" class="card-img-top" alt="...">
+            <div class="card animated fadeIn fast">
+                <img  "card-img-top img-fluid" src="{{ asset("images/" ~ categoria.imagen) }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">{{categoria.nombre}}</h5>
                     
