@@ -7,7 +7,7 @@
 
     {{ include('subcategoria/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('subcategoria_index') }}">back to list</a>
+    <a href="{{ path('subcategoria_index', {'categoria': categoria.id}) }}">back to list</a>
 
     {{ include('subcategoria/_delete_form.html.twig') }}
 {% endblock %}

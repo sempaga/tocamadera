@@ -14,7 +14,7 @@ class SubcategoriaType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('imagen', FileType::class)
+            ->add('imagen', FileType::class, ['mapped' => false])
             ->add('categoria')
         ;
     }

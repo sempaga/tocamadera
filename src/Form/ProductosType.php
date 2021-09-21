@@ -15,7 +15,7 @@ class ProductosType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('imagen', FileType::class)
+            ->add('imagen', FileType::class, ['mapped' => false])
             ->add('nombre')
             ->add('stock')
             ->add('dimensiones')

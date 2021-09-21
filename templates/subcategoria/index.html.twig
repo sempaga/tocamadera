@@ -18,7 +18,7 @@
                             
                             {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ path('subcategoria_edit', {'id': subcategoria.id}) }}">edit</a>
-                            {{ include('subcategoria/_delete_form.html.twig') }}                            
+                            {{ include('subcategoria/_delete_form.html.twig', {subcategorium: subcategoria} ) }}                            
                             {% endif %}
                         </div>
                     </div>

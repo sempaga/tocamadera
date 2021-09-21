@@ -64,22 +64,25 @@ class SubcategoriaController extends AbstractController
     {
         $form = $this->createForm(SubcategoriaType::class, $subcategorium);
         $form->handleRequest($request);
+        $categoria= $subcategorium->getCategoria();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('subcategoria_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('subcategoria_index', ['categoria'=>$categoria->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('subcategoria/edit.html.twig', [
             'subcategorium' => $subcategorium,
+            'categoria'=>$categoria,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'subcategoria_delete', methods: ['POST'])]
-    public function delete(Request $request, Subcategoria $subcategorium, Categoria $categoria): Response
+    public function delete(Request $request, Subcategoria $subcategorium): Response
     {
+        $categoria= $subcategorium->getCategoria();
         if ($this->isCsrfTokenValid('delete'.$subcategorium->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($subcategorium);
